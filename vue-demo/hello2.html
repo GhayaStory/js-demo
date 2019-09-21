@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div#box {
+            width:100px;
+            height:100px;
+            color:darkgray;
+        }
+        .red{
+            background-color:red;
+        }
+        .blue{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <!-- v-bind   经常使用在class和style -->
+    <div id="app">
+        <button @click="color='red'">red</button>
+        <button @click="color='blue'">blue</button>
+        <div id="box" :class="color" >
+            <!-- 差值表达式不能使用在属性内部 class="{{color}}"-->
+            <!-- v-bind:class  缩写成   :class -->
+            <!-- :class="color"  ==> class="color的值" -->
+            <!-- :class="{red:false,blue:true}"  ==> class = "blue"-->
+            盒子盒子盒子盒子盒子盒子盒子盒子盒子 </div>
+        <hr>
+        <button @click="isRed = !isRed;">change</button>
+        <div id="box2" :class="{red:isRed,blue:!isRed}">
+            <!-- 差值表达式不能使用在属性内部 class="{{color}}"-->
+            <!-- v-bind:class  缩写成   :class -->
+            <!-- :class="color"  ==> class="color的值" -->
+            <!-- :class="{red:false,blue:true}"  ==> class = "blue"-->
+            盒子盒子盒子盒子盒子盒子盒子盒子盒子2
+        </div>
+        <hr>
+        <!-- 计算属性 -->
+        <div>
+            <h1>生日：{{birth}}</h1><br>  <!--计算方法直接使用方法名-->
+            <h1>生日：{{birth}}</h1><br>
+            <h1>生日：{{birth}}</h1><br>
+            <h1>生日：{{birth}}</h1><br>
+        </div>
+
+        <hr>
+        <!-- watch -->
+        <input type="text" v-model ="num">
+        <h1>num:{{num}}</h1>
+
+        <div>
+            <button @click="person.age++">+</button><button @click="person.age--">-</button>
+            <h1>{{person.age}}</h1>
+            <input type="text" v-model="person.age"/>
+        </div>
+    </div>
+</div>
+
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el:"#app",//element  vue的作用标签
+        data:{
+            num:1,
+            color:"",
+            isRed:true,
+            birthday: 1529032123201,  //毫秒值
+            person:{
+                name:"Ghaya",
+                age:26
+            }
+        },
+        computed:{//计算属性
+            birth(){
+                console.log("该计算方法只计算一次");
+                const day = new Date(this.birthday);
+                return day.getFullYear() + "年" + day.getMonth() + "月" + day.getDay() + "日";
+            }
+        },
+        watch:{//监控    监控改变后做一些事
+            num(newVal,oldVal){//浅监控
+                console.log(newVal + ":" + oldVal);
+            },
+            person:{
+                deep:true,
+                handler(val){
+                    console.log(val.age);
+                }
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

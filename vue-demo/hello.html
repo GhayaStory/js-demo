@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div id="app">
+        <button @click="thisClick">This</button>
+        <input type="text" v-model="num"/>
+        <button @click="num++">+</button>
+        <h1>Ghaya no story : {{name}}</h1><!--有差值闪烁不建议使用-->
+        <h1>Ghaya no story : <span v-text="name"></span></h1>  <!--使用标签消除差值闪烁-->
+        {{num}}
+        a啊啊啊啊
+        <br>
+        <span v-text="hname"></span><!--纯文本-->
+        <br>
+        <span v-html="hname"></span><!--翻译成超文本-->
+        <hr>
+        <h1>aaaaaaaaaaaaaa</h1>
+        <input type="checkbox" v-model="lessons" value="Java">Java<br>
+        <input type="checkbox" v-model="lessons" value="Python">python<br>
+        <input type="checkbox" v-model="lessons" value="C++">C++<br>
+        <input type="checkbox" v-model="lessons" value="Go">Go<br>
+        <h1>已学习：{{lessons.join(",")}}</h1>
+        <hr>
+        <!--v-on-->
+        <div  @click="print('div')" style="width:100px;height: 100px;background-color: cornsilk;">
+            div<button @click.stop="print('button')">Click me</button><!--阻止冒泡-->
+        </div>
+        <hr>
+        <!--v-for-->
+        <ul>
+            <li v-for="abc in users">
+                {{abc.name + "，" + abc.age }}
+            </li>
+
+            <li v-for="(u,index) in users">
+                {{index + ":" + u.name + "，" + u.age }}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="u in users[0]">{{u}}</li>
+            <li v-for="(val,attr,index) in users[0]">{{index + "." + attr + ":" + val}}</li>
+        </ul>
+        <ul>
+            <li v-for="num in 5">{{num}}</li>
+        </ul>
+        <hr>
+        <!--v-if  v-show -->
+        <button @click="show = !show">chance</button>
+        <br>
+        <h1 v-if="show">嘿嘿嘿</h1>
+        <h1 v-show="show">嘿嘿嘿2</h1>
+        <!--  与if区别在于隐藏的方式不同
+        v-if  直接移除dom元素
+        v-show 改变样式  性能稍好  频繁变更时使用 -->
+        <ul>
+            <li v-for="i in 10">
+                <span v-if="i%2===0"> 偶数：{{i}}</span>
+                <!--<br>   v-if 和  v-else 之间不能存在其他东西-->
+                <span v-else style="background-color:#ffff22;"> 奇数：{{i}}</span>
+                <br>
+            </li>
+        </ul>
+        <hr>
+
+
+    </div>
+</div>
+
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el:"#app",//element  vue的作用标签
+        data:{//div内用{{name}}来渲染数据
+            name:"ABC",
+            num:1,
+            lessons:[],
+            users:[
+                {name:'Ghaya1',gender:'男',age:25},
+                {name:'Ghaya2',gender:'男',age:26},
+                {name:'Ghaya3',gender:'男',age:27},
+                {name:'Ghaya4',gender:'男',age:28}
+            ],
+            show:true
+        },
+        methods:{
+            thisClick(){
+                console.log(this);
+                console.log("hello");
+            },
+            print(msg){
+                console.log(msg);
+            }
+        },
+        created(){
+          //向后台发起ajax请求，完成data数据初始化
+          this.name = "Who's Name";
+          setTimeout(() => this.name = "Ghaya",2000);
+          this.hname = "<font color='blue'>GhayaHtml</font>";
+          var str  = "";
+        }
+    });
+
+</script>
+</body>
+</html>

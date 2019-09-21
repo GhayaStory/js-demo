@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+<div id="main">
+    <div>
+        <h1 id="title">123</h1>
+    </div>
+</div>
+</body>
+<script>
+    console.log($("#title").html());
+    test1();
+    function test1(){
+        let url = "http://hq.sinajs.cn/list=";
+        let param = "sh601006";
+        $.ajax({
+            url:url+param,
+            type : "GET",
+            async : false,
+            dataType : "script",
+            cache : "true",
+            success:function(data,textStatus,jqXHR){
+                console.log(data);
+                console.log(textStatus);
+                console.log(jqXHR);
+                console.log(hq_str_sh601006);
+            },
+            error : function() {
+                alert("出错了！");
+            }
+        });
+    }
+    //http://api.dd373.com/Game/GetGameList?GameName=地下城与勇士
+    test2();
+    function test2(){
+        let url = "http://api.dd373.com/Game/GetGameList?GameName=地下城与勇士";
+        $.ajax({
+            url:url,
+            type : "GET",
+            async : false,
+            dataType : "script",
+            cache : "false",
+            success:function(data,textStatus,jqXHR){
+                console.log(data);
+            },
+            error : function() {
+                alert("出错了！");
+            }
+        });
+    }
+</script>
+</html>
